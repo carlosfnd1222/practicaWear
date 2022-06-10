@@ -5,55 +5,24 @@
     android:layout_height="match_parent"
     android:padding="@dimen/box_inset_layout_padding"
     tools:context=".MainActivity"
-    tools:deviceIds="wear" android:layout_width="match_parent">
+    tools:deviceIds="wear"
+    android:layout_width="match_parent">
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/inner_frame_layout_padding"
-    android:orientation="vertical"
-    app:layout_boxedEdges="all">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/text"
+    <Button
+        android:id="@+id/wBoton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.38"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="21dp" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom|left"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="36dp"
         android:background="@null"
-        android:src="@drawable/common_full_open_on_phone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton2"
-        app:layout_constraintHorizontal_bias="0.428"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom|right"
-        android:layout_marginTop="21dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="40dp"
-        android:background="@null"
-        android:src="@drawable/common_google_signin_btn_icon_light_normal"
+        android:text="Notificación"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.wear.widget.BoxInsetLayout>
