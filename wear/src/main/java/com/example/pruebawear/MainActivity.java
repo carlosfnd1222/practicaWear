@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -85,13 +86,21 @@ public class MainActivity extends Activity {
 
                  notification2 = new NotificationCompat.Builder(MainActivity.this, idChannel)
                         .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("Mi notificación")
+                        .setContentTitle("Notificación Wear")
                         .setContentText("Mi primera notificación Wear")
                         .extend(wearableExtender);
 
 
                 nm.notify(idNotification, notification.build());
-                nm.notify(idNotification, notification2.build());
+
+                new CountDownTimer(10000, 1000){
+
+                    public void onTick(long ms){}
+
+                    public void onFinish(){
+                        nm.notify(idNotification, notification2.build());
+                    }
+                }.start();
             }
         });
     }
