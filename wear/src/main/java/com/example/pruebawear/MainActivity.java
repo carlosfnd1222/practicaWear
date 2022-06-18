@@ -1,7 +1,6 @@
 package com.example.pruebawear;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -17,23 +16,20 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.pruebawear.databinding.ActivityMainBinding;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainActivity extends Activity {
     private Button wBoton = null;
     private ActivityMainBinding binding;
     private Intent intent;
-    private PendingIntent pendingIntent;
-    private PendingIntent pendingIntentTWO;
+    private Intent callIntent;
+    private PendingIntent pendingIntent, callPendingIntent;
 
     private NotificationCompat.Builder notification;
-    private Notification notification2;
     private NotificationManagerCompat nm;
     private NotificationCompat.WearableExtender wearableExtender;
+    private NotificationCompat.Action action;
 
     String idChannel = "Mi_Canal";
-    int idNotification = 001;
+    public static int idNotification = 001;
 
     private NotificationCompat.BigTextStyle bigTextStyle;
 
@@ -64,27 +60,30 @@ public class MainActivity extends Activity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                int importance = NotificationManager.IMPORTANCE_HIGH;
-                String name = "Notificación";
+                callIntent = new Intent(
+                        MainActivity.this,
+                        CallActivity.class);
+                callIntent.setFlags(
+                        Intent.FLAG_ACTIVITY_NEW_TASK
+                                |Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-                NotificationChannel notificationChannel =
-                        new NotificationChannel(idChannel, name, importance);
+                PendingIntent DialPendingIntent = PendingIntent.getActivity(
+                        MainActivity.this,
+                        0,
+                        callIntent,
+                        PendingIntent.FLAG_ONE_SHOT);
+
+                int importance = NotificationManager.IMPORTANCE_HIGH;
+                String name = "Notification";
+
+                NotificationChannel notificationChannel = new NotificationChannel(
+                        idChannel,
+                        name,
+                        importance);
 
                 nm.createNotificationChannel(notificationChannel);
 
-                /*pendingIntent = PendingIntent.getActivity(
-                        MainActivity.this,
-                        0,
-                        intent,
-                        0); */
-
                 pendingIntent = PendingIntent.getActivity(
-                        MainActivity.this,
-                        0,
-                        intent,
-                        PendingIntent.FLAG_UPDATE_CURRENT & pendingIntent.FLAG_MUTABLE);
-
-                pendingIntentTWO = PendingIntent.getActivity(
                         MainActivity.this,
                         0,
                         intent,
@@ -92,9 +91,11 @@ public class MainActivity extends Activity {
 
                 notification = new NotificationCompat.Builder(MainActivity.this, idChannel)
                         .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("Acción estandar")
-                        .setContentText("Notificación con acción estandar")
-                        .setContentIntent(pendingIntent);
+                        .setContentTitle("Buzón de voz")
+                        .setContentText("Carlos Soto dejo un mensaje en el buzón")
+                        .setContentIntent(pendingIntent)
+                        .addAction(R.drawable.llamada, "Llamar", DialPendingIntent)
+                        .setAutoCancel(true);
 
                 nm.notify(idNotification, notification.build());
 
